@@ -10,8 +10,8 @@ raw = f.read()
 
 raw = raw.lower()
 
-# nltk.download('punkt')
-# nltk.download('wordnet')
+nltk.download('punkt')
+nltk.download('wordnet')
 
 sent_tokens = nltk.sent_tokenize(raw)
 word_tokens = nltk.word_tokenize(raw)
@@ -31,6 +31,14 @@ def greeting(sentence):
     for word in sentence.split():
         if word.lower() in GREETING_INPUTS:
             return random.choice(GREETING_RESPONSES)
+
+GETSTOCK_INPUTS = ('acoes', 'bolsa')
+GETSTOCK_RESPONSES = ('the stock price is:', 'A alta de hoje foi:')
+
+def get_stock(sentence):
+    for word in sentence.split():
+        if word.lower() in GETSTOCK_INPUTS:
+            return random.choice(GETSTOCK_RESPONSES)
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -67,6 +75,8 @@ while(flag==True):
         else:
             if(greeting(user_response)!=None):
                 print("ROBO: "+greeting(user_response))
+            elif(get_stock(user_response)!=None):
+                print("ROBO: "+get_stock(user_response))
             else:
                 print("ROBO: ",end="")
                 print(response(user_response))
