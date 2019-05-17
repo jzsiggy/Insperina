@@ -2,6 +2,8 @@ import nltk
 import numpy as np 
 import random
 import string
+import quandl
+from googlesearch import search
 # import sklearn
 
 f = open('chatbot.txt','r',errors = 'ignore')
@@ -33,12 +35,14 @@ def greeting(sentence):
             return random.choice(GREETING_RESPONSES)
 
 GETSTOCK_INPUTS = ('acoes', 'bolsa')
-GETSTOCK_RESPONSES = ('the stock price is:', 'A alta de hoje foi:')
+TICKER_INPUTS =  ('TSLA', 'MSFT')
+GETSTOCK_RESPONSES = ('the stock price is: {}', 'o historico de acoes : {}')
 
 def get_stock(sentence):
+    quandl_data = quandl.get("FRED/GDP", start_date="2017-12-31", end_date="2019-01-31")
     for word in sentence.split():
         if word.lower() in GETSTOCK_INPUTS:
-            return random.choice(GETSTOCK_RESPONSES)
+            return random.choice(GETSTOCK_RESPONSES).format(quandl_data)
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
