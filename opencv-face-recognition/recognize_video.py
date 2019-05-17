@@ -14,6 +14,7 @@ import pickle
 import time
 import cv2
 import os
+from gtts import gTTS
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -116,6 +117,7 @@ while True:
 				(0, 0, 255), 2)
 			cv2.putText(frame, text, (startX, y),
 				cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+
 
 	# update the FPS counter
 	fps.update()

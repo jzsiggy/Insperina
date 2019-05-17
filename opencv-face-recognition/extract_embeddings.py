@@ -10,6 +10,7 @@ import imutils
 import pickle
 import cv2
 import os
+from ggts import gTTS
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -109,6 +110,21 @@ for (i, imagePath) in enumerate(imagePaths):
 			knownNames.append(name)
 			knownEmbeddings.append(vec.flatten())
 			total += 1
+
+
+			for i in knownNames:
+				mytext = "olá, {}".format(knownNames[i])
+
+
+
+				language = 'pt-br'
+
+
+				myobj = gTTS(text = mytext, lang = language, slow = False)
+
+				myobj.save("welcome.mp3")
+				os.system("mpg321 welcome.mp3")
+
 
 # dump the facial embeddings + names to disk
 print("[INFO] serializing {} encodings...".format(total))
