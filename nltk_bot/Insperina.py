@@ -5,6 +5,9 @@ import string
 import quandl
 from googlesearch import search
 
+
+quandl.ApiConfig.api_key = "K6Eu4_MkhWsvPqzJQWRV"
+
 # import sklearn
 
 f = open('chatbot.txt','r',errors = 'ignore')
@@ -29,21 +32,36 @@ def LemNormalize(text):
 
 GREETING_INPUTS = ("hello", "hi", "greetings", "sup", "what's up","hey",)
 GREETING_RESPONSES = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
+
 def greeting(sentence):
- 
     for word in sentence.split():
         if word.lower() in GREETING_INPUTS:
             return random.choice(GREETING_RESPONSES)
 
-GETSTOCK_INPUTS = ('acoes', 'bolsa')
-TICKER_INPUTS =  ('TSLA', 'MSFT')
-GETSTOCK_RESPONSES = ('the stock price is: {}', 'o historico de acoes : {}')
+GETSTOCK_INPUTS = ('acoes', 'bolsa', 'valores', )
+TICKER_INPUTS =  set()
+with open('sp500tickers.txt', 'r') as f:
+    for ticker in f.readlines():
+        TICKER_INPUTS.add(ticker)
+GETSTOCK_RESPONSES = ('the stock price is for {0}: {1}\n', 'o historico de acoes da {0} : {1}\n')
+
+def stock_show(sentence):
+    response = ''
+    for word in sentence.split():
+        if (word.upper()+'\n') in TICKER_INPUTS:
+            # quandl_data = quandl.get_table('ZACKS/FR', ticker='{}'.format(word))
+            quandl_data = quandl.get_table('WIKI/PRICES', qopts = { 'columns': ['ticker', 'date', 'close'] }, ticker = ['{}'.format(word),], date = { 'gte': '2018-01-01', 'lte': '2018-04-31' })
+            response = random.choice(GETSTOCK_RESPONSES).format(word, quandl_data)
+        else:
+            quandl_data = quandl.get("FRED/GDP", start_date="2017-12-31", end_date="2019-01-31")
+            response = random.choice(GETSTOCK_RESPONSES).format("FRED/GDP", quandl_data)
+    return response
 
 def get_stock(sentence):
-    quandl_data = quandl.get("FRED/GDP", start_date="2017-12-31", end_date="2019-01-31")
     for word in sentence.split():
         if word.lower() in GETSTOCK_INPUTS:
-            return random.choice(GETSTOCK_RESPONSES).format(quandl_data)
+            return stock_show(sentence)
+                
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
