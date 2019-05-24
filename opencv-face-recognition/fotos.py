@@ -12,18 +12,18 @@ vs = VideoStream(0).start()	#COMPUTERCAM
 time.sleep(2.0)
 # fps = FPS().start()
 
-path='../dataset/{}'.format(name)
+path='dataset/{}'.format(name)
 
 while os.path.exists(path):
 	print('Use outro nome pfvr')
 	name=input('qual nome? ')
-	path='../dataset/{}'.format(name)
+	path='dataset/{}'.format(name)
 
 os.mkdir(path)
 
 i=0
 
-while i<10:
+while i<30:
 	i+=1
 	frame = vs.read()
 	cv2.imwrite(os.path.join(path,  'zsig{}.png'.format(i)),  frame)
