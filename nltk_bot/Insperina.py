@@ -4,6 +4,8 @@ import random
 import string
 import quandl
 from googlesearch import search
+import sys
+from fotos import detectar_manos
 
 
 quandl.ApiConfig.api_key = "K6Eu4_MkhWsvPqzJQWRV"
@@ -32,6 +34,7 @@ def LemNormalize(text):
 
 GREETING_INPUTS = ("hello", "hi", "greetings", "sup", "what's up","hey",)
 GREETING_RESPONSES = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
+GET_FACE_DETECTION = ['detectar', 'quem sou eu?']
 
 def greeting(sentence):
     for word in sentence.split():
@@ -61,6 +64,11 @@ def get_stock(sentence):
     for word in sentence.split():
         if word.lower() in GETSTOCK_INPUTS:
             return stock_show(sentence)
+
+def get_detection(sentence):
+    for word in sentence.split():
+        if word.lower() in GET_FACE_DETECTION:
+            detectar_manos()
                 
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -100,6 +108,9 @@ while(flag==True):
                 print("ROBO: "+greeting(user_response))
             elif(get_stock(user_response)!=None):
                 print("ROBO: "+get_stock(user_response))
+            elif(get_detection(user_response)!=None):
+                print("ROBO: ")
+                get_detection()
             else:
                 print("ROBO: ",end="")
                 print(response(user_response))

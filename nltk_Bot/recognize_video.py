@@ -14,7 +14,7 @@ import pickle
 import time
 import cv2
 import os
-from gtts import gTTS
+# from gtts import gTTS
 
 # construct the argument parser and parse the arguments
 #ap = argparse.ArgumentParser()
