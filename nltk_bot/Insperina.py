@@ -6,6 +6,7 @@ import quandl
 from googlesearch import search
 import sys
 from fotos import detectar_manos
+import requests
 
 
 quandl.ApiConfig.api_key = "K6Eu4_MkhWsvPqzJQWRV"
@@ -118,6 +119,7 @@ while(flag==True):
     else:
         flag=False
         print("ROBO: Bye! take care..")
+
 
 
 
