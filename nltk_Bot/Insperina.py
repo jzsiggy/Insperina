@@ -35,8 +35,8 @@ def LemNormalize(text):
 	return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
 
 GREETING_INPUTS = ("salve", "eai", "oi", "ola", "beleza?","fala",)
-GREETING_RESPONSES = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
-GET_FACE_DETECTION = ['detectar', 'quem sou eu?']
+GREETING_RESPONSES = ["fala tu", "oi",  "tranquilo?", "e ai fake", "to felizão que voce ta falando comigo", "oi razao dos meus pensamentos impuros", "salve quebrada"]
+GET_FACE_DETECTION = ['detectar', 'quem sou eu?', "qual teu nome pai?"]
 
 def greeting(sentence):
     for word in sentence.split():
@@ -48,7 +48,7 @@ TICKER_INPUTS =  set()
 with open('sp500tickers.txt', 'r') as f:
     for ticker in f.readlines():
         TICKER_INPUTS.add(ticker)
-GETSTOCK_RESPONSES = ('the stock price is for {0}: {1}\n', 'o historico de acoes da {0} : {1}\n')
+GETSTOCK_RESPONSES = (' os valores das ações da {0}: {1}\n', 'o historico de ações da {0} : {1}\n')
 
 def stock_show(sentence):
     response = ''
@@ -90,7 +90,7 @@ def response(user_response):
     flat.sort()
     req_tfidf = flat[-2]
     if(req_tfidf==0):
-        robo_response=robo_response+"I am sorry! I don't understand you"
+        robo_response=robo_response+"foi mal, não entendo o que voce ta querendo me falar"
         return robo_response
     else:
         robo_response = robo_response+sent_tokens[idx]
@@ -98,29 +98,29 @@ def response(user_response):
 
 
 flag=True
-print("ROBO: My name is Robo. I will answer your queries about Chatbots. If you want to exit, type Bye!")
+print("Insperina: E ai fake, meu nome é Insperina. O que posso te ajudar?. Se quiser sair, digite flw!")
 while(flag==True):
     user_response = input()
     user_response=user_response.lower()
-    if(user_response!='bye'):
-        if(user_response=='thanks' or user_response=='thank you' ):
+    if(user_response!='flw'):
+        if(user_response=='obrigado' or user_response=='vlw' ):
             flag=False
-            print("ROBO: You are welcome..")
+            print("Insperina: Relaxa, tamo aqui para isso")
         else:
             if(greeting(user_response)!=None):
-                print("ROBO: "+greeting(user_response))
+                print("Insperina: "+greeting(user_response))
             elif(get_stock(user_response)!=None):
-                print("ROBO: "+get_stock(user_response))
+                print("Insperina: "+get_stock(user_response))
             elif(get_detection(user_response)!=None):
-                print("ROBO: ")
+                print("Insperina: ")
                 get_detection()
             else:
-                print("ROBO: ",end="")
+                print("Insperina: ",end="")
                 print(response(user_response))
                 sent_tokens.remove(user_response)
     else:
         flag=False
-        print("ROBO: Bye! take care..")
+        print("Insperina: Flw! se cuida..")
 
 
 
