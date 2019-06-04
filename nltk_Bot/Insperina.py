@@ -124,7 +124,8 @@ def response(user_response):
     robo_response=''
     sent_tokens.append(user_response)
 
-    TfidfVec = TfidfVectorizer(tokenizer=LemNormalize, stop_words='english')
+    # TfidfVec = TfidfVectorizer(tokenizer=LemNormalize, stop_words='english')
+    TfidfVec = TfidfVectorizer(tokenizer=LemNormalize)
     tfidf = TfidfVec.fit_transform(sent_tokens)
     vals = cosine_similarity(tfidf[-1], tfidf)
     idx=vals.argsort()[0][-2]
@@ -152,7 +153,7 @@ while(flag==True):
             if(greeting(user_response)!=None):
                 iTTS( greeting(user_response))
             elif(get_stock(user_response)!=None):
-                iTTS( get_stock(user_response))
+                print( get_stock(user_response))
             elif(get_detection(user_response)!=None):
                 print("Insperina: ")
                 get_detection()
@@ -165,7 +166,7 @@ while(flag==True):
                 sent_tokens.remove(user_response)
     else:
         flag=False
-        iTTS(" Flw! se cuida..")
+        iTTS(" Falou! se cuida..")
 
 
 
