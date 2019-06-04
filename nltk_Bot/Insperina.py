@@ -120,6 +120,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 from sklearn.metrics.pairwise import cosine_similarity
 
+lista_nao_entendi = ["foi mal, não entendo o que voce ta querendo me falar.", "mano que? o que voce esta falando ", "repete ai, não ta fazendo sentido"]
+
+
 def response(user_response):
     robo_response=''
     sent_tokens.append(user_response)
@@ -132,7 +135,7 @@ def response(user_response):
     flat.sort()
     req_tfidf = flat[-2]
     if(req_tfidf==0):
-        robo_response=robo_response+"foi mal, não entendo o que voce ta querendo me falar."
+        robo_response=robo_response+random.choice(lista_nao_entendi)
         return robo_response
     else:
         robo_response = robo_response+sent_tokens[idx]
