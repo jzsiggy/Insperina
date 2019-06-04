@@ -3,11 +3,11 @@ import numpy as np
 import random
 import string
 import quandl
+import json
 from googlesearch import search
 import sys
 from fotos import detectar_manos
-import requests
-
+import requests 
 
 quandl.ApiConfig.api_key = "K6Eu4_MkhWsvPqzJQWRV"
 
@@ -36,11 +36,43 @@ def LemNormalize(text):
 GREETING_INPUTS = ("salve", "eai", "oi", "ola", "beleza?","fala",)
 GREETING_RESPONSES = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
 GET_FACE_DETECTION = ['detectar', 'quem sou eu?']
+GET_WEATHER_INPUTS = ('clima', 'tempo', 'temperatura', 'vento', 'chuva', 'chover', 'sol', 'humidade')
 
 def greeting(sentence):
     for word in sentence.split():
         if word.lower() in GREETING_INPUTS:
             return random.choice(GREETING_RESPONSES)
+
+
+def show_weather():
+    api_key = "5996bb7475362a7cfaa36fae8a25935e"
+    base_url = "http://api.openweathermap.org/data/2.5/weather?"
+    complete_url = base_url + "appid=" + api_key + "&q=" + 'dublin'
+    response = requests.get(complete_url) 
+
+    resp = response.json() 
+    if resp["cod"] != "404": 
+        meteorologia = resp["main"] 
+        current_temperature = meteorologia["temp"] 
+    
+        current_pressure = meteorologia["pressure"] 
+    
+        current_humidiy = meteorologia["humidity"] 
+    
+        z = resp["weather"] 
+
+        weather_description = z[0]["description"] 
+        print(" temperatura em kelvin = " +
+                        str(current_temperature) + 
+            "\n pressao em pascal = " +
+                        str(current_pressure) +
+            "\n humidade em porcentagem = " +
+                        str(current_humidiy) +
+            "\n descricao = " +
+                        str(weather_description)) 
+    else: 
+        print(" City Not Found ") 
+
 
 GETSTOCK_INPUTS = ('acoes', 'bolsa', 'valores', )
 TICKER_INPUTS =  set()
@@ -70,6 +102,11 @@ def get_detection(sentence):
     for word in sentence.split():
         if word.lower() in GET_FACE_DETECTION:
             detectar_manos()
+
+def get_weather(sentence):
+    for word in sentence.split():
+        if word.lower() in GET_WEATHER_INPUTS:
+            show_weather()
                 
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -112,6 +149,9 @@ while(flag==True):
             elif(get_detection(user_response)!=None):
                 print("ROBO: ")
                 get_detection()
+            elif(get_weather(user_response)!= None):
+                print("ROBO: ")
+                get_weather(user_response)
             else:
                 print("ROBO: ",end="")
                 print(response(user_response))
