@@ -16,4 +16,12 @@ integração com APIs
  
  no diretório nltk_bot, crie uma pasta chamada dataset
  
+ # Dependencias
+ 
+ nltk
+ gtts
+ requests 
+ mpg321
+ quandl
+ googlesearch
 
