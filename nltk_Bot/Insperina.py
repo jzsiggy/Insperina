@@ -33,7 +33,7 @@ remove_punct_dict = dict((ord(punct), None) for punct in string.punctuation)
 def LemNormalize(text):
 	return LemTokens(nltk.word_tokenize(text.lower().translate(remove_punct_dict)))
 
-GREETING_INPUTS = ("hello", "hi", "greetings", "sup", "what's up","hey",)
+GREETING_INPUTS = ("salve", "eai", "oi", "ola", "beleza?","fala",)
 GREETING_RESPONSES = ["hi", "hey", "*nods*", "hi there", "hello", "I am glad! You are talking to me"]
 GET_FACE_DETECTION = ['detectar', 'quem sou eu?']
 
