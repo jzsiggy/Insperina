@@ -44,9 +44,12 @@ def detectar_manos():
 
 
 	
-	extract_embeddings()
-	train_model()
-	load_detector()
+		extract_embeddings()
+		train_model()
+		load_detector()
+
+	else:
+		load_detector()
 
 
 

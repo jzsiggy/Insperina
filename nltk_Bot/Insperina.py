@@ -7,6 +7,7 @@ from googlesearch import search
 import sys
 from fotos import detectar_manos
 import requests
+import recognize_video as rv
 
 
 quandl.ApiConfig.api_key = "K6Eu4_MkhWsvPqzJQWRV"
@@ -70,6 +71,7 @@ def get_detection(sentence):
     for word in sentence.split():
         if word.lower() in GET_FACE_DETECTION:
             detectar_manos()
+            print("Olá, {}".format(rv.name))
                 
 
 from sklearn.feature_extraction.text import TfidfVectorizer
