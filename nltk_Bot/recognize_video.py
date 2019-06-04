@@ -32,6 +32,9 @@ import os
 
 # load our serialized face detector from disk
 def load_detector():
+
+    global name
+    
     print("[INFO] loading face detector...")
     protoPath = os.path.sep.join(['face_detection_model', "deploy.prototxt"])
     modelPath = os.path.sep.join(['face_detection_model',
@@ -109,6 +112,8 @@ def load_detector():
                 j = np.argmax(preds)
                 proba = preds[j]
                 name = le.classes_[j]
+                
+                
 
                 # draw the bounding box of the face along with the
                 # associated probability
