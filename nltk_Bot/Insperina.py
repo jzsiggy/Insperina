@@ -8,6 +8,7 @@ import sys
 from fotos import detectar_manos
 import requests
 import recognize_video as rv
+from TTS import iTTS
 
 
 quandl.ApiConfig.api_key = "K6Eu4_MkhWsvPqzJQWRV"
@@ -71,7 +72,7 @@ def get_detection(sentence):
     for word in sentence.split():
         if word.lower() in GET_FACE_DETECTION:
             detectar_manos()
-            print("Olá, {}".format(rv.name))
+            iTTS("Olá, {}".format(rv.name))
                 
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -90,7 +91,7 @@ def response(user_response):
     flat.sort()
     req_tfidf = flat[-2]
     if(req_tfidf==0):
-        robo_response=robo_response+"foi mal, não entendo o que voce ta querendo me falar"
+        robo_response=robo_response+"foi mal, não entendo o que voce ta querendo me falar."
         return robo_response
     else:
         robo_response = robo_response+sent_tokens[idx]
@@ -98,29 +99,29 @@ def response(user_response):
 
 
 flag=True
-print("Insperina: E ai fake, meu nome é Insperina. O que posso te ajudar?. Se quiser sair, digite flw!")
+iTTS(" E ai fake, meu nome é Insperina. Como posso te ajudar?. Se quiser sair, digite flw!")
 while(flag==True):
     user_response = input()
     user_response=user_response.lower()
     if(user_response!='flw'):
         if(user_response=='obrigado' or user_response=='vlw' ):
             flag=False
-            print("Insperina: Relaxa, tamo aqui para isso")
+            iTTS(" Relaxa, tamo aqui para isso")
         else:
             if(greeting(user_response)!=None):
-                print("Insperina: "+greeting(user_response))
+                iTTS( greeting(user_response))
             elif(get_stock(user_response)!=None):
-                print("Insperina: "+get_stock(user_response))
+                iTTS( get_stock(user_response))
             elif(get_detection(user_response)!=None):
                 print("Insperina: ")
                 get_detection()
             else:
                 print("Insperina: ",end="")
-                print(response(user_response))
+                iTTS(response(user_response))
                 sent_tokens.remove(user_response)
     else:
         flag=False
-        print("Insperina: Flw! se cuida..")
+        iTTS(" Flw! se cuida..")
 
 
 
